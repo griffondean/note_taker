@@ -69,32 +69,6 @@ app.post("/api/notes", (req, res) => {
  
 });
 
-// Deletes note
-app.delete("/api/notes/:id", (req, res) => {
-  let deleteId = JSON.parse(req.params.id);
-  console.log("ID to be deleted: " ,deleteId);
-  fs.readFile(path.join(__dirname, "./db/db.json"), "utf8", (error,notes) => {
-    if (error) {
-        return console.log(error);
-    }
-   let notesArray = JSON.parse(notes);
-   //loop through notes array and remove note with id matching deleteId
-   for (var i=0; i < notesArray.length; i++){
-     if(deleteId == notesArray[i].id) {
-       notesArray.splice(i,1);
-
-       fs.writeFile(path.join(__dirname, "./db/db.json"), JSON.stringify(notesArray), (error, data) => {
-        if (error) {
-          return error;
-        }
-        console.log(notesArray);
-        res.json(notesArray);
-      })
-     }
-  }
-  
-}); 
-});
 
 // Initialize PORT to run app
 app.listen(PORT, () => console.log(`App listening on http://localhost:${PORT}`));
